@@ -36,5 +36,5 @@ export const Form = styled(Card, {
 
 export const FormHelperText = styled(Text, {
   marginTop: '$1',
-  color: '#DB4437 !important',
+  color: '#F75A68 !important',
 });
