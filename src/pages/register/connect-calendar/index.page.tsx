@@ -1,8 +1,6 @@
 import { Button, Heading, InputText, MultiStep, Text } from '@kahzita-ignite-ui/react';
 import { Container, Header } from '../styles';
 import { ArrowRight, Check } from 'phosphor-react';
-import { api } from '../../api/axios';
-import { AxiosError } from 'axios';
 import { AuthError, ConnectCard, ConnectItem } from './styles';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
