@@ -82,9 +82,9 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async getUserByAccount({ providerAccountId, provider }) {
       const account = await prisma.account.findUnique({
         where: {
-          provider_providerAccountId: {
+          provider_provider_account_id: {
             provider,
-            providerAccountId,
+            provider_account_id: providerAccountId,
           }
         },
         include: {
@@ -133,17 +133,17 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async linkAccount(account) {
       await prisma.account.create({
         data: {
-          userId: account.userId,
+          user_id: account.userId,
           type: account.type,
           provider: account.provider,
-          providerAccountId: account.providerAccountId,
-          refreshToken: account.refresh_token,
-          accessToken: account.refresh_token,
-          expiresAt: account.expires_at,
-          tokenType: account.token_type,
+          provider_account_id: account.providerAccountId,
+          refresh_token: account.refresh_token,
+          access_token: account.refresh_token,
+          expires_at: account.expires_at,
+          token_type: account.token_type,
           scope: account.scope,
-          idToken: account.id_token,
-          sessionState: account.session_state,
+          id_token: account.id_token,
+          session_state: account.session_state,
         }
       });
     },
@@ -151,9 +151,9 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async createSession({ sessionToken, userId, expires }) {
       await prisma.session.create({
         data: {
-          userId,
+          user_id: userId,
           expires,
-          sessionToken,
+          session_token: sessionToken,
         }
       });
 
@@ -167,7 +167,7 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async getSessionAndUser(sessionToken) {
       const session = await prisma.session.findUnique({
         where: {
-          sessionToken: sessionToken,
+          session_token: sessionToken,
         },
         include: {
           user: true,
@@ -182,9 +182,9 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
 
       return {
         session: {
-          userId: session.userId,
+          userId: session.user_id,
           expires: session.expires,
-          sessionToken: session.sessionToken,
+          sessionToken: session.session_token,
         },
         user: {
           id: user.id,
@@ -200,17 +200,17 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async updateSession({ sessionToken, userId, expires }) {
       const prismaSession = await prisma.session.update({
         where: {
-          sessionToken,
+          session_token: sessionToken,
         },
         data: {
           expires,
-          userId
+          user_id: userId
         }
       });
 
       return {
-        sessionToken: prismaSession.sessionToken,
-        userId: prismaSession.userId,
+        sessionToken: prismaSession.session_token,
+        userId: prismaSession.user_id,
         expires: prismaSession.expires,
       };
     },
@@ -218,7 +218,7 @@ export function PrismaAdapter(req: NextApiRequest, res: NextApiResponse): Adapte
     async deleteSession(sessionToken) {
       await prisma.session.delete({
         where: {
-          sessionToken
+          session_token: sessionToken
         }
       });
     }

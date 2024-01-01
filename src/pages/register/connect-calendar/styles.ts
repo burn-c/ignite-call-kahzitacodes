@@ -1,7 +1,6 @@
 import { Card, Text, styled } from '@kahzita-ignite-ui/react';
 
 export const ConnectCard = styled(Card, {
-  marginTop: '$6',
   display: 'flex',
   flexDirection: 'column',
   gap: '$6',
