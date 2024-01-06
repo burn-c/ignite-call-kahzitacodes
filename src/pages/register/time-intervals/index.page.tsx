@@ -34,9 +34,9 @@ const timeIntervalsFormSchema = z.object({
     }))
     .refine(intervals => {
       return intervals.every(
-        (interval) => interval.endTimeInMinutes - 30 >= interval.startTimeInMinutes);
+        (interval) => interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes);
     }, {
-      message: 'O horário de término deve ser pelo menos 30 minutos distante do horário de início'
+      message: 'O horário de término deve ser pelo menos 1 hora distante do horário de início'
     }),
 });
 

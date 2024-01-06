@@ -7,6 +7,9 @@ import { HelperText, ProfileCard } from './styles';
 import { useSession } from 'next-auth/react';
 import { api } from '@/lib/axios';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import { getServerSession } from 'next-auth';
+import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api';
 
 const updateProfileFormSchema = z.object({
   bio: z.string(),
@@ -64,3 +67,17 @@ export default function UpdateProfile() {
     </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOptions(req, res)
+  );
+
+  return {
+    props: {
+      session
+    }
+  };
+};
