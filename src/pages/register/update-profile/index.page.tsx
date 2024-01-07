@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
 import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api';
+import { NextSeo } from 'next-seo';
 
 const updateProfileFormSchema = z.object({
   bio: z.string(),
@@ -38,33 +39,37 @@ export default function UpdateProfile() {
   }
 
   return (
-    <Container>
-      <Header>
-        <Heading as="h2">Bem-vindo ao Ignite Call!</Heading>
-        <Text>
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode editar essas informações depois.
-        </Text>
+    <>
+      <NextSeo title="Atualize seu perfil | Ignite Call" noindex />
 
-        <MultiStep size={4} currentStep={4} />
-      </Header>
+      <Container>
+        <Header>
+          <Heading as="h2">Bem-vindo ao Ignite Call!</Heading>
+          <Text>
+            Precisamos de algumas informações para criar seu perfil! Ah, você pode editar essas informações depois.
+          </Text>
 
-      <ProfileCard as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
-        <label>
-          <Text size="sm">Foto de perfil</Text>
-          <Avatar src={session.data?.user.image} alt={session.data?.user.name} />
-        </label>
+          <MultiStep size={4} currentStep={4} />
+        </Header>
 
-        <label>
-          <Text size="sm">Sobre você</Text>
-          <Textarea placeholder="Seu nome" {...register('bio')} />
-          <HelperText size="sm">
-            Fale um pouco sobre você. Isto será exibido em sua página pessoal.
-          </HelperText>
-        </label>
+        <ProfileCard as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
+          <label>
+            <Text size="sm">Foto de perfil</Text>
+            <Avatar src={session.data?.user.image} alt={session.data?.user.name} />
+          </label>
 
-        <Button type="submit" disabled={isSubmitting}>Finalizar</Button>
-      </ProfileCard>
-    </Container>
+          <label>
+            <Text size="sm">Sobre você</Text>
+            <Textarea placeholder="Seu nome" {...register('bio')} />
+            <HelperText size="sm">
+              Fale um pouco sobre você. Isto será exibido em sua página pessoal.
+            </HelperText>
+          </label>
+
+          <Button type="submit" disabled={isSubmitting}>Finalizar</Button>
+        </ProfileCard>
+      </Container>
+    </>
   );
 }
 

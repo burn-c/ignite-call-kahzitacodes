@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { api } from '../../lib/axios';
 import { AxiosError } from 'axios';
+import { NextSeo } from 'next-seo';
 
 const registerFormSchema = z.object({
   username: z
@@ -50,31 +51,35 @@ export default function Register() {
   }, [router.query?.username]);
 
   return (
-    <Container>
-      <Header>
-        <Heading as="h2">Bem-vindo ao Ignite Call!</Heading>
-        <Text>
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode editar essas informações depois.
-        </Text>
+    <>
+      <NextSeo title="Crie uma conta | Ignite Call" />
 
-        <MultiStep size={4} currentStep={1} />
-      </Header>
+      <Container>
+        <Header>
+          <Heading as="h2">Bem-vindo ao Ignite Call!</Heading>
+          <Text>
+            Precisamos de algumas informações para criar seu perfil! Ah, você pode editar essas informações depois.
+          </Text>
 
-      <Form as="form" onSubmit={handleSubmit(handleRegister)}>
-        <label>
-          <Text size="sm">Nome de usuário</Text>
-          <InputText prefix="ignite.com/" placeholder="seu-usuario" {...register('username')} />
-          {errors.username && <FormHelperText size="sm">{errors.username.message}</FormHelperText>}
-        </label>
+          <MultiStep size={4} currentStep={1} />
+        </Header>
 
-        <label>
-          <Text size="sm">Nome completo</Text>
-          <InputText placeholder="Seu nome" {...register('name')} />
-          {errors.name && <FormHelperText size="sm">{errors.name.message}</FormHelperText>}
-        </label>
+        <Form as="form" onSubmit={handleSubmit(handleRegister)}>
+          <label>
+            <Text size="sm">Nome de usuário</Text>
+            <InputText prefix="ignite.com/" placeholder="seu-usuario" {...register('username')} />
+            {errors.username && <FormHelperText size="sm">{errors.username.message}</FormHelperText>}
+          </label>
 
-        <Button type="submit" disabled={isSubmitting}>Próximo Passo <ArrowRight /></Button>
-      </Form>
-    </Container>
+          <label>
+            <Text size="sm">Nome completo</Text>
+            <InputText placeholder="Seu nome" {...register('name')} />
+            {errors.name && <FormHelperText size="sm">{errors.name.message}</FormHelperText>}
+          </label>
+
+          <Button type="submit" disabled={isSubmitting}>Próximo Passo <ArrowRight /></Button>
+        </Form>
+      </Container>
+    </>
   );
 }
